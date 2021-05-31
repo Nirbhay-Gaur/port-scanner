@@ -23,6 +23,14 @@ static vector<string> split(const string& str, char del, bool allow_empty = fals
     return tokens;
 }
 
+// Convert string to int
+static int stoi(const string& str) {
+    stringstream sstream(str);
+    int i;
+    sstream >> i;
+    return i;
+}
+
 int main() {
    string address;
    int port;
