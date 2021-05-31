@@ -1,5 +1,5 @@
 # Port Scanner
-A port scanner is a program which probes a server for open ports by attempting a connection to the server via each port in turn.The program usually then reports which ports were open and which were closed. Open ports may constitute security vulnerabilities as they allow remote machines to connect. Unexpectedly-open ports may indicate malicious software listening for instructions.
+A port scanner is a program which probes a server for open ports by attempting a connection to the server via each port in turn. The program usually then reports which ports were open and which were closed. Open ports may constitute security vulnerabilities as they allow remote machines to connect. Unexpectedly-open ports may indicate malicious software listening for instructions.
 This is a simple command line tool that determines which ports on the server is open.
 
 ## Prerequisite
