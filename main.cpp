@@ -31,6 +31,20 @@ static int stoi(const string& str) {
     return i;
 }
 
+// Generate a vector containing a range of values
+template <typename T>
+static vector<T> range(T min, T max) {
+    if(min > max) 
+        swap(min, max); 
+    if(min == max)
+        return vector<T> (1, min);
+    vector<T> values;
+    for(; min <= max; min++) {
+        values.push_back(min);
+    }
+    return values;
+}
+
 int main() {
    string address;
    int port;
