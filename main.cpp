@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <vector>
 #include <iomanip>
@@ -96,17 +96,33 @@ static size_t digits(T value) {
     return count;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
    string address;
    string portList;
    vector<int> ports;
    bool openPort = false; 
 
-   cout << "Address: " << flush;
-   getline(cin, address);
-   cout << "Port: " << flush;
-   getline(cin, portList);
-   ports = parsePortsList(portList);
+   if(argc == 2 && !strcmp(argv[1], "-h")) {
+        cerr << "Usage: " << argv[0] << " address port(s)\n"
+                  << "Examples:\n"
+                  << "\t" << argv[0] << " 192.0.43.10 80\n"
+                  << "\t" << argv[0] << " example.com 80,443\n"
+                  << "\t" << argv[0] << " 127.0.0.1 0-65535\n"
+                  << "\t" << argv[0] << " localhost 0-21,80,8080"
+                  << std::endl;
+        exit(EXIT_SUCCESS);
+   } else if (argc == 3) {
+        address = argv[1];
+        ports = parsePortsList(std::string(argv[2]));
+    } else {
+        std::string port_list;
+        std::cout << "Address: " << std::flush;
+        std::getline(std::cin, address);
+        std::cout << "Port: " << std::flush;
+        std::getline(std::cin, port_list);
+        ports = parsePortsList(port_list);
+    }
+
    cout << "Scanning for open ports..." << endl;
    size_t width = digits(maximum(ports));
    for(int port : ports) {
