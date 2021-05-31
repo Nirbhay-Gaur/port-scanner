@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iomanip>
 #include <SFML/Network.hpp>
 
 using namespace sf;
@@ -71,24 +72,52 @@ static vector<int> parsePortsList(const string& list) {
     return ports;
 }
 
+// Get maximum value in a vector
+template <typename T>
+static T maximum(const vector<T>& values) {
+    T max = values[0];
+    for(T value : values) {
+        if(value > max) 
+            max = value;
+    }
+    return max;
+}
+
+// Counts digits in a number
+template <typename T>
+static size_t digits(T value) {
+    size_t count = (value < 0) ? 1 : 0;
+    if(value == 0)
+        return 0;
+    while (value) {
+        value /= 10;
+        ++count;
+    };
+    return count;
+}
+
 int main() {
    string address;
    string portList;
    vector<int> ports;
+   bool openPort = false; 
 
    cout << "Address: " << flush;
    getline(cin, address);
    cout << "Port: " << flush;
    getline(cin, portList);
    ports = parsePortsList(portList);
-   cout << "Scanning..." << endl;
+   cout << "Scanning for open ports..." << endl;
+   size_t width = digits(maximum(ports));
    for(int port : ports) {
-       cout << "Port " << port << " : ";
-       if(isPortOpen(address, port)) 
-           cout << "OPEN\n";
-       else
-           cout << "CLOSED\n";
+       if(isPortOpen(address, port)) {
+            openPort = true; 
+            cout << "Port " << setw(width) << port << " : OPEN\n"; 
+       }
    }
+   if(openPort == false) 
+       cout << "No open port available\n";
+
     cout << flush;
     return 0;
 }
